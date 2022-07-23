@@ -6,6 +6,9 @@ app.use(express.json());
 const users = [];
 const emprestimo = [];
 
+//Reflexao
+//Será que esse método tem muita responsabilidade ?
+//Será que é válido quebrar em classes ?
 app.post("/user", (request, response) => {
   const { name, cpf, age, uf, renda_mensal } = request.body;
 
@@ -15,11 +18,17 @@ app.post("/user", (request, response) => {
     return response.status(400).json({error: "User already exists!"})
   }
 
+  //Dica
+  //O Cliente pode ter mais de uma empréstimo disponível para usar
+  //Será que ao dar o return eu passo nas demais condições para saber se ele é elegivel ?
+  //Isso serve para todos os condicionais.
   if(renda_mensal <= 3000 ) {
     users.push({
       name,cpf,age,uf,renda_mensal,
+      //Será que vale renomear a variavel emprestimo para representar melhor qual tipo de empréstimo estamos adicionando ?
       emprestimo: [emprestimo]
     });
+    
     const emprestimo =[
     "EMPRESTIMO COM GARANTIA", 
     "Taxa: 4%",
